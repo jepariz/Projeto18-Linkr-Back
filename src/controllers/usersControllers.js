@@ -3,7 +3,7 @@ import { createUser, uniqueEmailValidation } from "../repositories/usersReposito
 
 
 export async function signUp(req, res) {
-  console.log(req.body)
+
   const {username, email, password, photo } = req.body;
 
   const hashPassword = bcrypt.hashSync(password, 10);
