@@ -13,7 +13,7 @@ export async function signUp(req, res) {
     const emailExists = await uniqueEmailValidation(email);
   
     if (emailExists.rowCount > 0) {
-      return res.sendStatus(409);
+      return res.status(409).send("Usuário já cadastrado");
     }
   
     await createUser(username, email, hashPassword, photo);
