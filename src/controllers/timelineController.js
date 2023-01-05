@@ -6,10 +6,7 @@ export async function getLast20Posts(req, res, next) {
 
 export async function postPost(req,res) {
   try {
-    console.log(res.locals);
-    const data = {...req.body, id: res.locals.user.id};
-    console.log(data);
-    // await createPost(data);
+    await createPost(req.body);
     return res.sendStatus(201);
   } catch (err) {
     console.log(err.message);
