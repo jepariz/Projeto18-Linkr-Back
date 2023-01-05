@@ -16,7 +16,6 @@ export default function (req, res, next) {
       const queryString = `
         SELECT * FROM USERS WHERE USERS.USERNAME = $1
       `;
-
       try {
         const users = await connection.query(queryString, [token.username]);
         if (users.rows.length === 0) return res.sendStatus(401);
