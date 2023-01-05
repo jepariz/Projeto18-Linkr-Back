@@ -14,15 +14,14 @@ export default function (req, res, next) {
     process.env.SECRET,
     async (error, token) => {
       if (error) return res.sendStatus(401);
-
       const queryString = `
-        SELECT * FROM USERS WHERE EMAIL = $1
+        SELECT * FROM USERS WHERE USERS.USERNAME = $1
       `;
 
       try {
-        const users = await connection.query(queryString, [token.email]);
+        const users = await connection.query(queryString, [token.username]);
         if (users.rows.length === 0) return res.sendStatus(401);
-        res.locals.user = users[0];
+        res.locals.user = users.rows[0];
       } catch (error) {
         return res.sendStatus(401);
       }
