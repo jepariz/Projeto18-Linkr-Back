@@ -1,0 +1,102 @@
+[
+  {
+    "_id": "af32c15f-8bf7-4986-94de-46f71e0794a4",
+    "colId": "history",
+    "containerId": "",
+    "name": "https://localhost:4000/login",
+    "url": "https://localhost:4000/login",
+    "method": "POST",
+    "sortNum": 0,
+    "created": "2023-01-05T16:39:45.017Z",
+    "modified": "2023-01-05T16:39:45.017Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"email\" : \"joao@email.com\",\n  \"password\" : \"123\",\n  \"username\" : \"joaozin123\",\n  \"photo\" : \"https://static1.patasdacasa.com.br/articles/0/49/40/@/20656-o-coco-de-cachorro-saudavel-tem-a-colora-articles_media_mobile-2.jpg\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "2b4ce728-5e8c-4cff-8dd8-1d275de7dbf7",
+    "colId": "history",
+    "containerId": "",
+    "name": "http://localhost:4000/login",
+    "url": "http://localhost:4000/login",
+    "method": "POST",
+    "sortNum": 0,
+    "created": "2023-01-05T16:40:36.748Z",
+    "modified": "2023-01-05T16:41:27.240Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"email\" : \"joao@email.com\",\n  \"password\" : \"123\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "d0abf419-35ee-4e4a-9ccb-2e8d876b34b6",
+    "colId": "history",
+    "containerId": "",
+    "name": "http://localhost:4000/singup",
+    "url": "http://localhost:4000/singup",
+    "method": "POST",
+    "sortNum": 0,
+    "created": "2023-01-05T16:40:50.279Z",
+    "modified": "2023-01-05T16:40:50.279Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"email\" : \"joao@email.com\",\n  \"password\" : \"123\",\n  \"username\" : \"joaozin123\",\n  \"photo\" : \"https://static1.patasdacasa.com.br/articles/0/49/40/@/20656-o-coco-de-cachorro-saudavel-tem-a-colora-articles_media_mobile-2.jpg\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "b167cf37-a28d-4526-9cd4-19c522311c4d",
+    "colId": "history",
+    "containerId": "",
+    "name": "http://localhost:4000/signup",
+    "url": "http://localhost:4000/signup",
+    "method": "POST",
+    "sortNum": 0,
+    "created": "2023-01-05T16:40:56.643Z",
+    "modified": "2023-01-05T16:40:56.643Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"email\" : \"joao@email.com\",\n  \"password\" : \"123\",\n  \"username\" : \"joaozin123\",\n  \"photo\" : \"https://static1.patasdacasa.com.br/articles/0/49/40/@/20656-o-coco-de-cachorro-saudavel-tem-a-colora-articles_media_mobile-2.jpg\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "bfb5f2ee-4238-4447-9da8-8eae3ce73377",
+    "colId": "history",
+    "containerId": "",
+    "name": "http://localhost:4000/timeline",
+    "url": "http://localhost:4000/timeline",
+    "method": "GET",
+    "sortNum": 0,
+    "created": "2023-01-05T16:43:54.801Z",
+    "modified": "2023-01-05T17:42:13.870Z",
+    "headers": [
+      {
+        "name": "Authorization",
+        "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvYW96aW4xMjMiLCJwaG90b1VybCI6Imh0dHBzOi8vc3RhdGljMS5wYXRhc2RhY2FzYS5jb20uYnIvYXJ0aWNsZXMvMC80OS80MC9ALzIwNjU2LW8tY29jby1kZS1jYWNob3Jyby1zYXVkYXZlbC10ZW0tYS1jb2xvcmEtYXJ0aWNsZXNfbWVkaWFfbW9iaWxlLTIuanBnIiwiaWF0IjoxNjcyOTM2ODg3fQ.n1HBwfxfNi3ptfE1-guu3wjZw5i7WxGqlhEqOYBg-S0"
+      }
+    ],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"email\" : \"joao@email.com\",\n  \"password\" : \"123\"\n}",
+      "form": []
+    },
+    "tests": []
+  }
+]

@@ -4,11 +4,10 @@ import { connection } from "../database/db.js";
 export default function (req, res, next) {
   const { authorization } = req.headers;
   if (!authorization) return res.sendStatus(401);
-
   const bearer_token = authorization.split(" ");
-  if (bearer_token.length !== 2 || bearer_token[0] != "Bearer")
+  if (bearer_token.length !== 2 || bearer_token[0] !== "Bearer")
     return res.sendStatus(401);
-
+  
   return jwt.verify(
     bearer_token[1],
     process.env.SECRET,
@@ -24,6 +23,7 @@ export default function (req, res, next) {
         if (users.rows.length === 0) return res.sendStatus(401);
         res.locals.user = users[0];
       } catch (error) {
+        console.log("erro no try");
         return res.sendStatus(401);
       }
 
