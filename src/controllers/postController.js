@@ -9,8 +9,13 @@ import {
 export async function updatePost(req, res, next) {
   const { id } = req.params;
   const { comment } = req.body;
-  const update = await updatePostById({ id, comment });
-  return update ? res.sendStatus(200) : res.sendStatus(500);
+
+  try {
+    const update = await updatePostById({ id, comment });
+    return update ? res.sendStatus(200) : res.sendStatus(500);
+  } catch (error) {
+    return res.sendStatus(500);
+  }
 }
 
 export async function deletePost(req, res, next) {
