@@ -7,7 +7,7 @@ export default function (req, res, next) {
   const bearer_token = authorization.split(" ");
   if (bearer_token.length !== 2 || bearer_token[0] !== "Bearer")
     return res.sendStatus(401);
-  
+
   return jwt.verify(
     bearer_token[1],
     process.env.SECRET,
