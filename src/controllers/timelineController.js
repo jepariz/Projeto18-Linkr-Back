@@ -24,7 +24,7 @@ export async function postPost(req, res) {
     const hashtags = req.body.text.match(/#\w+/g);
 
     for(let i=0; i<hashtags.length; i++) {
-      const hashtag = hashtags[i];
+      const hashtag = hashtags[i].slice(1);
       const checkExistingHashtag = await getHashtagByName(hashtag);
       let hashtagID;
       if(checkExistingHashtag.rows.length===0) {
