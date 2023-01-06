@@ -155,11 +155,35 @@ export async function verifyIfIsLiked(post_id, user_id) {
       `SELECT * FROM likes WHERE post_id = $1 AND user_id = $2`,
       [post_id, user_id]
     );
-
+    
     console.log(teste.rows);
     return teste.rowCount > 0;
   } catch (error) {
     console.log("deu erro");
     return false;
   }
+}
+
+export async function getPostsByHashtagID(hashtagID, limit=20) {
+  let posts = [];
+  try {
+    posts = await connection.query(
+      `
+          SELECT POSTS.ID, USERS.USERNAME, USERS.PHOTO, POSTS.LINK, POSTS.TEXT
+          FROM USERS JOIN POSTS ON USERS.ID = POSTS.USER_ID
+          JOIN HASHTAGS_POSTS ON POSTS.ID = HASHTAGS_POSTS.POST_ID
+          WHERE HASHTAGS_POSTS.HASHTAG_ID = $1
+          ORDER BY POSTS.CREATED_AT DESC
+          LIMIT $2 
+      `,
+      [hashtagID, limit]
+    );
+  } catch (error) {
+    console.log(error);
+    return { error };
+  }
+
+  posts = await addMetadataToPosts(posts.rows);
+
+  return { posts: posts };
 }
