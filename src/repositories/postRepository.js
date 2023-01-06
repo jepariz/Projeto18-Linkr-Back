@@ -50,7 +50,7 @@ export async function getPostsByUserId(id) {
       `
           SELECT POSTS.ID, USERS.USERNAME, USERS.PHOTO, POSTS.LINK, POSTS.TEXT
           FROM POSTS JOIN USERS ON POSTS.USER_ID = USERS.ID
-          WHERE POSTS.ID = $1
+          WHERE USERS.ID = $1
       `,
       [id]
     );
@@ -61,7 +61,7 @@ export async function getPostsByUserId(id) {
 
   posts = await addMetadataToPosts(posts.rows);
 
-  return { posts: posts[0] };
+  return { posts: posts };
 }
 
 export async function getPostById(id) {
@@ -125,16 +125,28 @@ export async function unlikePost(post_id, user_id) {
 
 export async function deletePostById({ id }) {
   try {
-    await connection.query(
+    const likes = await connection.query(
+      "DELETE FROM LIKES WHERE POST_ID = $1",
+      [id]
+    );
+
+    const hashtags = await connection.query(
+      `
+        DELETE FROM HASHTAGS_POSTS WHERE POST_ID = $1
+      `,
+      [id]
+    );
+
+    const post = await connection.query(
       `
       DELETE FROM POSTS WHERE POSTS.ID = $1
     `,
       [id]
     );
-    return post.rowCount > 0;
+
+    return { rowCount: post.rowCount };
   } catch (error) {
-    console.log("deu erro");
-    return false;
+    return { error };
   }
 }
 export async function verifyIfIsLiked(post_id, user_id) {
