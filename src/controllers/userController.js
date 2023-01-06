@@ -11,3 +11,8 @@ export async function getUserPosts(req, res, next) {
     res.sendStatus(500);
   }
 }
+
+export async function getUserId(req, res, next) {
+  console.log(res.locals.user);
+  return res.send(res.locals.user);
+}

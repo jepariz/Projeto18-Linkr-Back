@@ -50,7 +50,7 @@ export async function getPostsByUserId(id) {
       `
           SELECT POSTS.ID, USERS.USERNAME, USERS.PHOTO, POSTS.LINK, POSTS.TEXT
           FROM POSTS JOIN USERS ON POSTS.USER_ID = USERS.ID
-          WHERE POSTS.ID = $1
+          WHERE USERS.ID = $1
       `,
       [id]
     );
@@ -61,7 +61,7 @@ export async function getPostsByUserId(id) {
 
   posts = await addMetadataToPosts(posts.rows);
 
-  return { posts: posts[0] };
+  return { posts: posts };
 }
 
 export async function getPostById(id) {
