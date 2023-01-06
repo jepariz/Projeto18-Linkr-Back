@@ -20,8 +20,16 @@ export async function updatePost(req, res, next) {
 
 export async function deletePost(req, res, next) {
   const { id } = req.params;
-  const update = await deletePostById({ id });
-  return update ? res.sendStatus(200) : res.sendStatus(500);
+  console.log("ERROR");
+  try {
+    const { error } = await deletePostById({ id });
+    console.log("ERROR 1", error);
+    if (error) return res.sendStatus(500);
+
+    return res.sendStatus(200);
+  } catch (error) {
+    return res.sendStatus(500);
+  }
 }
 
 export async function likePostController(req, res) {
