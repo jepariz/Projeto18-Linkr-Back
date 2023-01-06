@@ -8,6 +8,8 @@ export async function createPost(data) {
 }
 
 export async function getIDfromLastPost(user_id) {
-  const postsFromUserLogged = await connection.query(`SELECT id FROM posts WHERE user_id = $1 ORDER BY id DESC`, [user_id]);
+  const postsFromUserLogged = await connection.query(
+    `SELECT id FROM posts WHERE user_id = $1 ORDER BY id DESC`, 
+    [user_id]);
   return postsFromUserLogged.rows[0].id;
 }

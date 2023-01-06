@@ -1,6 +1,13 @@
-import { createHashtag, createRelationPostHashtag, getHashtagByName } from "../repositories/hashtagRepository.js";
+import {
+  createHashtag,
+  createRelationPostHashtag,
+  getHashtagByName,
+} from "../repositories/hashtagRepository.js";
 import { getPosts } from "../repositories/postRepository.js";
-import { createPost, getIDfromLastPost } from "../repositories/timelineRepository.js";
+import {
+  createPost,
+  getIDfromLastPost,
+} from "../repositories/timelineRepository.js";
 
 export async function getLast20Posts(req, res, next) {
   try {
@@ -23,11 +30,11 @@ export async function postPost(req, res) {
 
     const hashtags = req.body.text.match(/#\w+/g);
 
-    for(let i=0; i<hashtags.length; i++) {
+    for (let i = 0; i < hashtags.length; i++) {
       const hashtag = hashtags[i].slice(1);
       const checkExistingHashtag = await getHashtagByName(hashtag);
       let hashtagID;
-      if(checkExistingHashtag.rows.length===0) {
+      if (checkExistingHashtag.rows.length === 0) {
         await createHashtag(hashtag);
         const newHashtag = await getHashtagByName(hashtag);
         hashtagID = newHashtag.rows[0].id;
@@ -35,7 +42,7 @@ export async function postPost(req, res) {
         hashtagID = checkExistingHashtag.rows[0].id;
       }
       await createRelationPostHashtag(newPostID, hashtagID);
-    };
+    }
 
     return res.sendStatus(201);
   } catch (err) {
