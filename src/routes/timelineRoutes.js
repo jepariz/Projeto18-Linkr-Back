@@ -8,5 +8,6 @@ const router = Router();
 
 router.get("/timeline", jwtValidator, getLast20Posts);
 router.post("/post", validateSchema(postSchema), jwtValidator, postPost);
+router.get("/:id/posts", jwtValidator, getOtherUserPosts)
 
 export default router;
