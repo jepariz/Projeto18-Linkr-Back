@@ -7,6 +7,7 @@ import { getPosts } from "../repositories/postRepository.js";
 import {
   createPost,
   getIDfromLastPost,
+  getOtherUserPosts,
 } from "../repositories/timelineRepository.js";
 
 export async function getLast20Posts(req, res, next) {
@@ -48,5 +49,19 @@ export async function postPost(req, res) {
   } catch (err) {
     console.log(err.message);
     return res.status(500).send(err.message);
+  }
+}
+
+export async function otherUserPosts(req, res) {
+  const { id } = req.params;
+  try {
+    const postsOtherUser = await getOtherUserPosts(id);
+    console.log(postsOtherUser.rowCount);
+    if (postsOtherUser.rowCount === 0) {
+      return res.sendStatus(404);
+    }
+    return res.send(postsOtherUser.rows).status(200);
+  } catch (error) {
+    return res.status(500).send(error.message);
   }
 }

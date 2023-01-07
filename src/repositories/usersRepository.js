@@ -19,8 +19,4 @@ export function findUser(email, password) {
   );
 }
 
-export function getOtherUserPosts(id) {
-  return connection.query(`SELECT (link, text) FROM posts WHERE user_id = $1;`, [
-    id,
-  ]);
-}
+
