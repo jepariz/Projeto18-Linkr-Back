@@ -6,7 +6,7 @@ export async function getPosts(limit = 20) {
   try {
     posts = await connection.query(
       `
-          SELECT POSTS.ID, USERS.USERNAME, USERS.PHOTO, POSTS.LINK, POSTS.TEXT
+          SELECT POSTS.ID, USERS.USERNAME, USERS.PHOTO, POSTS.LINK, POSTS.TEXT, POSTS.USER_ID
           FROM POSTS JOIN USERS ON POSTS.USER_ID = USERS.ID
           ORDER BY POSTS.CREATED_AT DESC
           LIMIT $1 
@@ -48,7 +48,7 @@ export async function getPostsByUserId(id) {
   try {
     posts = await connection.query(
       `
-          SELECT POSTS.ID, USERS.USERNAME, USERS.PHOTO, POSTS.LINK, POSTS.TEXT
+          SELECT POSTS.ID, USERS.USERNAME, USERS.PHOTO, POSTS.LINK, POSTS.TEXT, POSTS.USER_ID
           FROM POSTS JOIN USERS ON POSTS.USER_ID = USERS.ID
           WHERE USERS.ID = $1
       `,
@@ -155,7 +155,7 @@ export async function verifyIfIsLiked(post_id, user_id) {
       `SELECT * FROM likes WHERE post_id = $1 AND user_id = $2`,
       [post_id, user_id]
     );
-    
+
     console.log(teste.rows);
     return teste.rowCount > 0;
   } catch (error) {
@@ -164,7 +164,7 @@ export async function verifyIfIsLiked(post_id, user_id) {
   }
 }
 
-export async function getPostsByHashtagID(hashtagID, limit=20) {
+export async function getPostsByHashtagID(hashtagID, limit = 20) {
   let posts = [];
   try {
     posts = await connection.query(
