@@ -13,3 +13,9 @@ export async function getIDfromLastPost(user_id) {
     [user_id]);
   return postsFromUserLogged.rows[0].id;
 }
+
+export function getOtherUserPosts(id) {
+  return connection.query(`SELECT * FROM posts WHERE user_id = $1;`, [
+    id,
+  ]);
+}
