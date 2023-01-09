@@ -5,7 +5,7 @@ import {
   likePostController,
   unlikePostController,
   isLiked,
-  likesList
+  likesList,
 } from "../controllers/postController.js";
 import jwtValidator from "../middlewares/jwtValidator.js";
 import idFromUserValidator from "../middlewares/idFromUserValidator.js";
@@ -20,6 +20,6 @@ router.delete("/post/:id", jwtValidator, idFromUserValidator, deletePost);
 router.post("/like", jwtValidator, likePostController);
 router.delete("/unlike/:id", jwtValidator, unlikePostController);
 router.get("/isLiked/:id", jwtValidator, isLiked);
-router.get("/likeList", jwtValidator, likesList)
+router.get("/likeList/:postId", jwtValidator, likesList);
 
 export default router;
