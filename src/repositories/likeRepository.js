@@ -57,7 +57,6 @@ export async function getLikesInPost(post_id, user_id) {
                 JOIN users AS u
                 ON l.user_id = u.id
                 WHERE l.post_id = $1
-                LIMIT 2
                 ) likes
         ) as users
     FROM likes AS l
