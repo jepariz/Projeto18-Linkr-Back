@@ -117,20 +117,7 @@ export async function deletePostById(id) {
     return { error };
   }
 }
-export async function verifyIfIsLiked(post_id, user_id) {
-  try {
-    const teste = await connection.query(
-      `SELECT * FROM likes WHERE post_id = $1 AND user_id = $2`,
-      [post_id, user_id]
-    );
 
-    console.log(teste.rows);
-    return teste.rowCount > 0;
-  } catch (error) {
-    console.log("deu erro");
-    return false;
-  }
-}
 
 export async function getPostsByHashtagID(hashtagID, limit = 20) {
   let posts = [];

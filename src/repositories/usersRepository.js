@@ -18,3 +18,10 @@ export function findUser(email, password) {
     [email, password]
   );
 }
+
+export function findUserByName(username) {
+  return connection.query(
+    `SELECT * FROM users WHERE username ILIKE '${username}%'`
+  );
+}
+

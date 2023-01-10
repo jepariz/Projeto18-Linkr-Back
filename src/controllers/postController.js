@@ -8,10 +8,13 @@ import { deletePostLikesById } from "../repositories/likesRepository.js";
 import {
   deletePostById,
   updatePostById,
+} from "../repositories/postRepository.js";
+import {
+  getLikesInPost,
   likePost,
   unlikePost,
   verifyIfIsLiked,
-} from "../repositories/postRepository.js";
+} from "../repositories/likeRepository.js";
 
 export async function updatePost(req, res, next) {
   const { id } = req.params;
@@ -102,6 +105,18 @@ export async function isLiked(req, res) {
   try {
     const verify = await verifyIfIsLiked(id, userId);
     return res.send({ liked: verify }).status(200);
+  } catch (error) {
+    return res.send(error).status(500);
+  }
+}
+
+export async function likesList(req, res) {
+  const userId = res.locals.user.id;
+  const { postId } = req.params;
+  console.log("TESTE AQUI", req.params);
+  try {
+    const totalOfLikes = await getLikesInPost(postId, userId);
+    return res.send(totalOfLikes).status(200);
   } catch (error) {
     return res.send(error).status(500);
   }
