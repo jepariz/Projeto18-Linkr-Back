@@ -1,13 +1,14 @@
 import { getPostsByUserId } from "../repositories/postRepository.js";
-import { findUserByName } from "../repositories/usersRepository.js";
+import { findUserByID, findUserByName } from "../repositories/usersRepository.js";
 
 export async function getUserPosts(req, res, next) {
   try {
     const { error, posts } = await getPostsByUserId(req.params.id);
+    const userInfos = await findUserByID(req.params.id);
 
     if (error) return res.sendStatus(500);
 
-    return res.send(posts);
+    return res.status(200).send({posts, user:userInfos.rows});
   } catch (error) {
     res.sendStatus(500);
   }
