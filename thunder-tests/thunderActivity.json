@@ -85,11 +85,11 @@
     "colId": "history",
     "containerId": "",
     "name": "http://localhost:4000/timeline",
-    "url": "http://localhost:4000/unlike/4",
-    "method": "DELETE",
+    "url": "http://localhost:4000/likeList",
+    "method": "GET",
     "sortNum": 0,
     "created": "2023-01-05T16:43:54.801Z",
-    "modified": "2023-01-05T20:49:42.386Z",
+    "modified": "2023-01-08T23:48:10.637Z",
     "headers": [
       {
         "name": "Authorization",
@@ -97,6 +97,11 @@
       }
     ],
     "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"postId\" : \"7\"\n}",
+      "form": []
+    },
     "tests": []
   }
 ]
