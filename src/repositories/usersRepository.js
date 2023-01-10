@@ -25,3 +25,8 @@ export function findUserByName(username) {
   );
 }
 
+export function findUserByID(id) {
+  return connection.query(
+    `SELECT username, photo FROM users WHERE id = $1;`, [id]
+  )
+}

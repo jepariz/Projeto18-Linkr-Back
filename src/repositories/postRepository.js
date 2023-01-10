@@ -126,7 +126,7 @@ export async function getPostsByHashtagID(hashtagID, limit = 20) {
   try {
     posts = await connection.query(
       `
-          SELECT POSTS.ID, USERS.USERNAME, USERS.PHOTO, POSTS.LINK, POSTS.TEXT
+          SELECT POSTS.ID, USERS.USERNAME, USERS.PHOTO, POSTS.LINK, POSTS.TEXT, POSTS.USER_ID
           FROM USERS JOIN POSTS ON USERS.ID = POSTS.USER_ID
           JOIN HASHTAGS_POSTS ON POSTS.ID = HASHTAGS_POSTS.POST_ID
           WHERE HASHTAGS_POSTS.HASHTAG_ID = $1
