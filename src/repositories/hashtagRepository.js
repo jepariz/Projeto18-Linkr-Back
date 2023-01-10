@@ -29,3 +29,18 @@ export async function getTrending() {
     LIMIT 10;`
   );
 }
+
+export async function deleteRelationPostHashtag(id) {
+  try {
+    const hashtags = await connection.query(
+      `
+        DELETE FROM HASHTAGS_POSTS WHERE POST_ID = $1
+      `,
+      [id]
+    );
+
+    return { rowCount: hashtags.rowCount };
+  } catch (error) {
+    return { error };
+  }
+}

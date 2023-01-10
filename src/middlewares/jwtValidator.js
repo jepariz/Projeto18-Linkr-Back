@@ -21,7 +21,6 @@ export default function (req, res, next) {
         if (users.rows.length === 0) return res.sendStatus(401);
         res.locals.user = users.rows[0];
       } catch (error) {
-        console.log("erro no try");
         return res.sendStatus(401);
       }
 
