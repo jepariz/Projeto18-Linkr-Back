@@ -1,5 +1,5 @@
 import { connection } from "../database/db.js";
-import urlMetadata from "url-metadata";
+import { addMetadataToPosts } from "../repositories/urlMetadataRepository.js";
 
 export async function getPosts(limit = 20) {
   let posts = [];
@@ -21,26 +21,6 @@ export async function getPosts(limit = 20) {
   posts = await addMetadataToPosts(posts.rows);
 
   return { posts: posts };
-}
-
-async function addMetadataToPosts(posts) {
-  for (let i = 0; i < posts.length; i++) {
-    try {
-      const { title, image, description } = await urlMetadata(posts[i].link);
-      posts[i] = { ...posts[i], ...{ title, image, description } };
-    } catch (error) {
-      posts[i] = {
-        ...posts[i],
-        ...{
-          title: "Não foi possivel encontrar esse link",
-          image:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR39CGp9ylTkfbLNKAaYTIT0930v6E2k3iyTRCewYL4Nw&s",
-          description: "Não foi possivel encontrar uma descricao",
-        },
-      };
-    }
-  }
-  return posts;
 }
 
 export async function getPostsByUserId(id) {
@@ -73,6 +53,7 @@ export async function getPostById(id) {
       `,
       [id]
     );
+    console.log(posts.rows);
     return { post: posts.rows[0] };
   } catch (error) {
     return { error };
@@ -81,16 +62,16 @@ export async function getPostById(id) {
 
 export async function updatePostById({ id, comment }) {
   try {
-    const post = await connection.query(
+    await connection.query(
       `
       UPDATE POSTS SET TEXT = $2
       WHERE POSTS.ID = $1
     `,
       [id, comment]
     );
-    return post.rowCount > 0;
+    return {};
   } catch (error) {
-    return false;
+    return { error };
   }
 }
 
@@ -114,7 +95,6 @@ export async function unlikePost(post_id, user_id) {
       `DELETE FROM likes WHERE post_id = $1 AND user_id = $2;`,
       [post_id, user_id]
     );
-    console.log(teste);
     return true;
   } catch (error) {
     console.log("caiu no catch");
@@ -123,20 +103,8 @@ export async function unlikePost(post_id, user_id) {
   }
 }
 
-export async function deletePostById({ id }) {
+export async function deletePostById(id) {
   try {
-    const likes = await connection.query(
-      "DELETE FROM LIKES WHERE POST_ID = $1",
-      [id]
-    );
-
-    const hashtags = await connection.query(
-      `
-        DELETE FROM HASHTAGS_POSTS WHERE POST_ID = $1
-      `,
-      [id]
-    );
-
     const post = await connection.query(
       `
       DELETE FROM POSTS WHERE POSTS.ID = $1

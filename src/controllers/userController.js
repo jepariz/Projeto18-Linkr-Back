@@ -13,6 +13,5 @@ export async function getUserPosts(req, res, next) {
 }
 
 export async function getUserId(req, res, next) {
-  console.log(res.locals.user);
   return res.send(res.locals.user);
 }

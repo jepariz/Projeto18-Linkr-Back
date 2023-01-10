@@ -9,11 +9,19 @@ import {
 import jwtValidator from "../middlewares/jwtValidator.js";
 import idFromUserValidator from "../middlewares/idFromUserValidator.js";
 import { json } from "express";
+import { validateSchema } from "../middlewares/schemaValidator.js";
+import commentSchema from "../models/commentSchema.js";
 
 const router = Router();
 router.use(json());
 
-router.put("/post/:id", jwtValidator, idFromUserValidator, updatePost);
+router.put(
+  "/post/:id",
+  jwtValidator,
+  idFromUserValidator,
+  validateSchema(commentSchema),
+  updatePost
+);
 router.delete("/post/:id", jwtValidator, idFromUserValidator, deletePost);
 
 router.post("/like", jwtValidator, likePostController);

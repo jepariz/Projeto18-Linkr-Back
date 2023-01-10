@@ -5,8 +5,7 @@ export default async function (req, res, next) {
   const { error, post } = await getPostById(id);
 
   if (error) return res.sendStatus(401);
-
-  if (post.user_id === res.locals.user.id) return next();
+  if (post.user_id && post.user_id === res.locals.user.id) return next();
 
   return res.sendStatus(401);
 }
