@@ -43,3 +43,8 @@ export async function createFollow(follower_id, followed_id) {
 export async function deleteFollow(follower_id, followed_id) {
   await connection.query(`DELETE FROM follows WHERE follower_id = $1 AND followed_id = $2;` [follower_id, followed_id]);
 }
+export function findUserByID(id) {
+  return connection.query(
+    `SELECT username, photo FROM users WHERE id = $1;`, [id]
+  )
+}

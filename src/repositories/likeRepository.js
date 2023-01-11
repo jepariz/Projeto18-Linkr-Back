@@ -7,7 +7,6 @@ export async function verifyIfIsLiked(post_id, user_id) {
       [post_id, user_id]
     );
 
-    console.log(teste.rows);
     return teste.rowCount > 0;
   } catch (error) {
     console.log("deu erro");
@@ -35,7 +34,6 @@ export async function unlikePost(post_id, user_id) {
       `DELETE FROM likes WHERE post_id = $1 AND user_id = $2;`,
       [post_id, user_id]
     );
-    console.log(teste);
     return true;
   } catch (error) {
     console.log("caiu no catch");

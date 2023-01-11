@@ -53,7 +53,7 @@ export async function getPostById(id) {
       `,
       [id]
     );
-    console.log(posts.rows);
+
     return { post: posts.rows[0] };
   } catch (error) {
     return { error };
@@ -118,13 +118,12 @@ export async function deletePostById(id) {
   }
 }
 
-
 export async function getPostsByHashtagID(hashtagID, limit = 20) {
   let posts = [];
   try {
     posts = await connection.query(
       `
-          SELECT POSTS.ID, USERS.USERNAME, USERS.PHOTO, POSTS.LINK, POSTS.TEXT
+          SELECT POSTS.ID, USERS.USERNAME, USERS.PHOTO, POSTS.LINK, POSTS.TEXT, POSTS.USER_ID
           FROM USERS JOIN POSTS ON USERS.ID = POSTS.USER_ID
           JOIN HASHTAGS_POSTS ON POSTS.ID = HASHTAGS_POSTS.POST_ID
           WHERE HASHTAGS_POSTS.HASHTAG_ID = $1
