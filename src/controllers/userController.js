@@ -45,7 +45,7 @@ export async function getUsersByName(req, res) {
 
 export async function setFollow(req, res) {
   try{
-    const followed_id = req.params.id;
+    const followed_id = Number(req.params.id);
     const follower_id = res.locals.user.id;
     const check = await checkFollow(follower_id, followed_id);
     if(check) {
