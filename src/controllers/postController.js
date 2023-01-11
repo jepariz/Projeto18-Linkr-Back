@@ -113,7 +113,7 @@ export async function isLiked(req, res) {
 export async function likesList(req, res) {
   const userId = res.locals.user.id;
   const { postId } = req.params;
-  console.log("TESTE AQUI", req.params);
+
   try {
     const totalOfLikes = await getLikesInPost(postId, userId);
     return res.send(totalOfLikes).status(200);

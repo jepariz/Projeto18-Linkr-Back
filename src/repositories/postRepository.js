@@ -53,7 +53,7 @@ export async function getPostById(id) {
       `,
       [id]
     );
-    console.log(posts.rows);
+
     return { post: posts.rows[0] };
   } catch (error) {
     return { error };
@@ -117,7 +117,6 @@ export async function deletePostById(id) {
     return { error };
   }
 }
-
 
 export async function getPostsByHashtagID(hashtagID, limit = 20) {
   let posts = [];
