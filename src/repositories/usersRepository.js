@@ -27,9 +27,10 @@ export function findUserByName(username) {
 
 export async function checkFollow(follower_id, followed_id) {
   const results = await connection.query(
-    `SELECT * FROM follows WHERE follower_id = $1 AND followed_id = $2;`, 
-    [follower_id, followed_id]);
-  if(results.rows.length===0) {
+    `SELECT * FROM follows WHERE follower_id = $1 AND followed_id = $2;`,
+    [follower_id, followed_id]
+  );
+  if (results.rows.length === 0) {
     return false;
   } else {
     return true;
@@ -37,14 +38,28 @@ export async function checkFollow(follower_id, followed_id) {
 }
 
 export async function createFollow(follower_id, followed_id) {
-  await connection.query(`INSERT INTO follows (follower_id, followed_id) VALUES ($1, $2);`, [follower_id, followed_id]);
+  await connection.query(
+    `INSERT INTO follows (follower_id, followed_id) VALUES ($1, $2);`,
+    [follower_id, followed_id]
+  );
 }
 
 export async function deleteFollow(follower_id, followed_id) {
-  await connection.query(`DELETE FROM follows WHERE follower_id = $1 AND followed_id = $2;`, [follower_id, followed_id]);
+  await connection.query(
+    `DELETE FROM follows WHERE follower_id = $1 AND followed_id = $2;`,
+    [follower_id, followed_id]
+  );
 }
+
 export function findUserByID(id) {
+  return connection.query(`SELECT username, photo FROM users WHERE id = $1;`, [
+    id,
+  ]);
+}
+
+export function getFollows(user_id) {
   return connection.query(
-    `SELECT username, photo FROM users WHERE id = $1;`, [id]
-  )
+    `SELECT followed_id FROM follows WHERE follower_id = $1;`,
+    [user_id]
+  );
 }
