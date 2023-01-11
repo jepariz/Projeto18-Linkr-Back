@@ -69,7 +69,7 @@ export async function getPostById(id) {
       `,
       [id]
     );
-    console.log(posts.rows);
+
     return { post: posts.rows[0] };
   } catch (error) {
     return { error };

@@ -59,7 +59,7 @@ export async function otherUserPosts(req, res) {
   const { id } = req.params;
   try {
     const postsOtherUser = await getOtherUserPosts(id);
-    console.log(postsOtherUser.rowCount);
+
     if (postsOtherUser.rowCount === 0) {
       return res.sendStatus(404);
     }
