@@ -12,7 +12,10 @@ import {
 
 export async function getLast20Posts(req, res, next) {
   try {
-    const { error, posts } = await getPosts(20);
+    const { error, posts } = await getPosts({
+      user_id: res.locals.user.id,
+      limit: 20,
+    });
 
     if (error) return res.sendStatus(500);
 
