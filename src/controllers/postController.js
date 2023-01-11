@@ -15,6 +15,10 @@ import {
   unlikePost,
   verifyIfIsLiked,
 } from "../repositories/likeRepository.js";
+import {
+  createRepost,
+  deleteRepost,
+} from "../repositories/repostRepository.js";
 
 export async function updatePost(req, res, next) {
   const { id } = req.params;
@@ -52,12 +56,13 @@ export async function deletePost(req, res, next) {
   const { id } = req.params;
   try {
     const { error: errorHashtag } = await deleteRelationPostHashtag(id);
-
     if (errorHashtag) return res.sendStatus(500);
 
     const { error: errorLikes } = await deletePostLikesById(id);
-
     if (errorLikes) return res.sendStatus(500);
+
+    const { error: errorRepost } = await deleteRepost(id);
+    if (errorRepost) return res.sendStatus(500);
 
     const { error: errorPost } = await deletePostById(id);
     if (errorPost) return res.sendStatus(500);
@@ -67,6 +72,16 @@ export async function deletePost(req, res, next) {
     console.log(error);
     return res.sendStatus(500);
   }
+}
+
+export async function repostPost(req, res) {
+  const { id: post_id } = req.params;
+  const { id: user_id } = res.locals.user;
+
+  const { error } = await createRepost({ post_id, user_id });
+  if (error) return res.sendStatus(500);
+
+  return res.sendStatus(201);
 }
 
 export async function likePostController(req, res) {
@@ -113,7 +128,7 @@ export async function isLiked(req, res) {
 export async function likesList(req, res) {
   const userId = res.locals.user.id;
   const { postId } = req.params;
-  console.log("TESTE AQUI", req.params);
+
   try {
     const totalOfLikes = await getLikesInPost(postId, userId);
     return res.send(totalOfLikes).status(200);
