@@ -1,33 +1,19 @@
 import { connection } from "../database/db.js";
 import { addMetadataToPosts } from "../repositories/urlMetadataRepository.js";
 
-export async function getPosts({ user_id, limit = 20 }) {
+export async function getPosts(user_id, limit = 20) {
   let posts = [];
   try {
     posts = await connection.query(
       `
-      SELECT 
-      P1.ID, U1.USERNAME, U1.PHOTO, P1.LINK, P1.TEXT, 
-      P1.USER_ID, P1.CREATED_AT AS DATE, NULL AS REPOST_BY,
-      (SELECT COUNT(R2.POST_ID) FROM REPOST AS R2 
-      WHERE R2.POST_ID = P1.ID) AS REPOST_TIMES
-      FROM POSTS AS P1
-      JOIN USERS AS U1 ON P1.USER_ID = U1.ID
-      UNION ALL
-      SELECT 
-      P2.ID, U2.USERNAME, U2.PHOTO, P2.LINK, P2.TEXT, 
-      P2.USER_ID, P2.CREATED_AT AS DATE, U3.USERNAME AS REPOST_BY, 
-      (SELECT COUNT(R2.POST_ID) FROM REPOST AS R2 
-      WHERE R2.POST_ID = P2.ID) AS REPOST_TIMES
-      FROM REPOST AS R 
-      JOIN POSTS AS P2 ON P2.ID = R.POST_ID 
-      JOIN USERS AS U2 ON U2.ID = P2.USER_ID
-      JOIN USERS AS U3 ON U3.ID = R.USER_ID
-      JOIN FOLLOWS AS F ON F.FOLLOWER_ID = $2
-      ORDER BY DATE DESC
-      LIMIT $1  
+          SELECT POSTS.ID, USERS.USERNAME, USERS.PHOTO, POSTS.LINK, POSTS.TEXT, POSTS.USER_ID
+          FROM POSTS JOIN USERS ON POSTS.USER_ID = USERS.ID
+          JOIN FOLLOWS ON USERS.ID = FOLLOWS.FOLLOWED_ID
+          WHERE FOLLOWS.FOLLOWER_ID = $1
+          ORDER BY POSTS.CREATED_AT DESC
+          LIMIT $2; 
       `,
-      [limit, user_id]
+      [user_id, limit]
     );
   } catch (error) {
     console.log(error);
