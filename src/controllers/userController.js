@@ -1,5 +1,8 @@
 import { getPostsByUserId } from "../repositories/postRepository.js";
 import {
+  checkFollow,
+  createFollow,
+  deleteFollow,
   findUserByID,
   findUserByName,
 } from "../repositories/usersRepository.js";
@@ -41,6 +44,33 @@ export async function getUsersByName(req, res) {
         return res.status(200).send(users);
       }
     }
+  } catch (err) {
+    return res.status(500).send(err.message);
+  }
+}
+
+export async function setFollow(req, res) {
+  try {
+    const followed_id = Number(req.params.id);
+    const follower_id = res.locals.user.id;
+    const check = await checkFollow(follower_id, followed_id);
+    if (check) {
+      await deleteFollow(follower_id, followed_id);
+    } else {
+      await createFollow(follower_id, followed_id);
+    }
+
+    return res.status(200).send(!check);
+  } catch (err) {
+    return res.status(500).send(err.message);
+  }
+}
+
+export async function verifyFollow(req, res) {
+  try {
+    const followed_id = req.params.id;
+    const follower_id = res.locals.user.id;
+    return res.status(200).send(await checkFollow(follower_id, followed_id));
   } catch (err) {
     return res.status(500).send(err.message);
   }
