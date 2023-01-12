@@ -47,6 +47,7 @@ export async function login(req, res) {
     const payload = {
       username: emailExists.rows[0].username,
       photoUrl: emailExists.rows[0].photo,
+      id: emailExists.rows[0].id
     };
   
     const jwtToken = jwt.sign(payload, secret);

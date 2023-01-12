@@ -1,17 +1,19 @@
 import { connection } from "../database/db.js";
 import { addMetadataToPosts } from "../repositories/urlMetadataRepository.js";
 
-export async function getPosts(limit = 20) {
+export async function getPosts(user_id, limit = 20) {
   let posts = [];
   try {
     posts = await connection.query(
       `
           SELECT POSTS.ID, USERS.USERNAME, USERS.PHOTO, POSTS.LINK, POSTS.TEXT, POSTS.USER_ID
           FROM POSTS JOIN USERS ON POSTS.USER_ID = USERS.ID
+          JOIN FOLLOWS ON USERS.ID = FOLLOWS.FOLLOWED_ID
+          WHERE FOLLOWS.FOLLOWER_ID = $1
           ORDER BY POSTS.CREATED_AT DESC
-          LIMIT $1 
+          LIMIT $2; 
       `,
-      [limit]
+      [user_id, limit]
     );
   } catch (error) {
     console.log(error);
