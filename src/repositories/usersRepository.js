@@ -25,6 +25,16 @@ export function findUserByName(username) {
   );
 }
 
+export function findFollowByName(user_id, username) {
+  return connection.query(
+    `SELECT users.id 
+    FROM users JOIN follows 
+    ON users.id = follows.followed_id 
+    WHERE follows.follower_id = $1 AND users.username ILIKE '${username}%';`, 
+    [user_id]
+  );
+}
+
 export async function checkFollow(follower_id, followed_id) {
   const results = await connection.query(
     `SELECT * FROM follows WHERE follower_id = $1 AND followed_id = $2;`,
