@@ -26,6 +26,7 @@ export function findUserByName(username) {
 }
 
 export async function checkFollow(follower_id, followed_id) {
+
   const results = await connection.query(
     `SELECT * FROM follows WHERE follower_id = $1 AND followed_id = $2;`,
     [follower_id, followed_id]
