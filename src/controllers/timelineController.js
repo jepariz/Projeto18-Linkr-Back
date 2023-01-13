@@ -10,14 +10,17 @@ import {
   getOtherUserPosts,
   getPostUpdate,
 } from "../repositories/timelineRepository.js";
+import { getFollows } from "../repositories/usersRepository.js";
 
-export async function getLast20Posts(req, res, next) {
+export async function getLast20Posts(req, res) {
   try {
-    const { error, posts } = await getPosts(20);
+    const { error, posts } = await getPosts(res.locals.user.id, 20);
 
     if (error) return res.sendStatus(500);
 
-    return res.send(posts);
+    const follows = await getFollows(res.locals.user.id);
+
+    return res.send({ posts, follows: follows.rows });
   } catch (error) {
     console.log(error);
     return res.sendStatus(500);
