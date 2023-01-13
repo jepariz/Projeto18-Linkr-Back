@@ -23,8 +23,7 @@ export async function getPostUpdate(id) {
   try {
     return await connection.query(
       `SELECT 
-  u.id AS user_id,
-  f.followed_id AS links_arr,
+  f.followed_id AS followed_id,
       (SELECT json_agg(posts)
           FROM
           ( SELECT
