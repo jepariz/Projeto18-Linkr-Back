@@ -6,6 +6,7 @@ import {
   unlikePostController,
   isLiked,
   likesList,
+  repostPost,
 } from "../controllers/postController.js";
 import jwtValidator from "../middlewares/jwtValidator.js";
 import idFromUserValidator from "../middlewares/idFromUserValidator.js";
@@ -24,7 +25,7 @@ router.put(
   updatePost
 );
 router.delete("/post/:id", jwtValidator, idFromUserValidator, deletePost);
-
+router.post("/repost/:id", jwtValidator, repostPost);
 router.post("/like", jwtValidator, likePostController);
 router.delete("/unlike/:id", jwtValidator, unlikePostController);
 router.get("/isLiked/:id", jwtValidator, isLiked);
