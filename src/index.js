@@ -5,7 +5,7 @@ import timelineRoutes from "./routes/timelineRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import postRoutes from "./routes/postRoutes.js";
 import hashtagRoutes from "./routes/hashtagRoutes.js";
-
+import commentsRoutes from "./routes/commentsRoutes.js"
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -15,6 +15,7 @@ app.use(timelineRoutes);
 app.use(userRoutes);
 app.use(postRoutes);
 app.use(hashtagRoutes);
+app.use(commentsRoutes)
 
 const port = process.env.PORT || 4000;
 app.listen(port, () => console.log(`Server running in port ${port}`));

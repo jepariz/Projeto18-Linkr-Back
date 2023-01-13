@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import { connection } from "../database/db.js";
 
 export default function (req, res, next) {
-  const { authorization } = req.headers;
+  const { authorization} = req.headers;
   if (!authorization) return res.sendStatus(401);
   const bearer_token = authorization.split(" ");
   if (bearer_token.length !== 2 || bearer_token[0] !== "Bearer")
@@ -23,7 +23,6 @@ export default function (req, res, next) {
       } catch (error) {
         return res.sendStatus(401);
       }
-
       return next();
     }
   );
