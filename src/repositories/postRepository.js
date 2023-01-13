@@ -36,7 +36,6 @@ export async function getPosts({ user_id, limit = 5, date }) {
       queryValues
     );
   } catch (error) {
-    console.log(error);
     return { error };
   }
 
