@@ -30,7 +30,7 @@ export async function getPostUpdate(id) {
               p.link,
               p.text
               FROM posts AS p
-              WHERE p.user_id = f.followed_id AND EXTRACT(EPOCH FROM current_timestamp - p.created_at) < 15000) 
+              WHERE p.user_id = f.followed_id AND EXTRACT(EPOCH FROM current_timestamp - p.created_at) < 15) 
       posts ) AS links_from_follows_updated
   FROM users AS u
   JOIN follows AS f
