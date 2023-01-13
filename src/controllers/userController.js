@@ -3,6 +3,7 @@ import {
   checkFollow,
   createFollow,
   deleteFollow,
+  findFollowByName,
   findUserByID,
   findUserByName,
 } from "../repositories/usersRepository.js";
@@ -26,19 +27,28 @@ export async function getUserId(req, res, next) {
 
 export async function getUsersByName(req, res) {
   const username = req.query.q;
+  const id = res.locals.user.id;
 
   let users = [];
 
   try {
     if (username.length >= 3) {
       const userExists = await findUserByName(username);
+      const follows = await findFollowByName(id, username);
 
       if (userExists.rowCount > 0) {
         userExists.rows.map((u) => {
+          let included = false;
+
+          follows.rows.map((e) => {
+            if (u.id === e.id) included = true;
+          });
+
           users.push({
             username: u.username,
             photo: u.photo,
             id: u.id,
+            isFollow: included,
           });
         });
         return res.status(200).send(users);
