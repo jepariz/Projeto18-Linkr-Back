@@ -40,14 +40,17 @@ export async function getUsersByName(req, res) {
         userExists.rows.map((u) => {
           let included = false;
 
+
           follows.rows.map((e) => {
             if (u.id === e.id) included = true;
+
           });
 
           users.push({
             username: u.username,
             photo: u.photo,
             id: u.id,
+
             isFollow: included,
           });
         });
