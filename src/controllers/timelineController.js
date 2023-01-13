@@ -8,6 +8,7 @@ import {
   createPost,
   getIDfromLastPost,
   getOtherUserPosts,
+  getPostUpdate,
 } from "../repositories/timelineRepository.js";
 import { getFollows } from "../repositories/usersRepository.js";
 
@@ -66,5 +67,17 @@ export async function otherUserPosts(req, res) {
     return res.send(postsOtherUser.rows).status(200);
   } catch (error) {
     return res.status(500).send(error.message);
+  }
+}
+
+export async function updatePosts(req, res) {
+  const userId = res.locals.user.id;
+
+
+  try {
+    const newPosts = await getPostUpdate(userId);
+    return res.send(newPosts.rows).status(200)
+  } catch (error) {
+    return res.send(error).status(500);
   }
 }
