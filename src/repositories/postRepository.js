@@ -1,7 +1,7 @@
 import { connection } from "../database/db.js";
 import { addMetadataToPosts } from "../repositories/urlMetadataRepository.js";
 
-export async function getPosts({ user_id, limit = 5, date }) {
+export async function getPosts({ user_id, limit = 10, date }) {
   let posts = [];
   const queryValues = [user_id, limit];
   if (date) queryValues.push(date);
