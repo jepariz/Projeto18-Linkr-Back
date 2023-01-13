@@ -1,6 +1,6 @@
 import { Router } from "express";
 import {
-  getLast20Posts,
+  getLast10Posts,
   otherUserPosts,
   postPost,
 } from "../controllers/timelineController.js";
@@ -10,7 +10,7 @@ import postSchema from "../models/postSchema.js";
 
 const router = Router();
 
-router.get("/timeline", jwtValidator, getLast20Posts);
+router.get("/timeline", jwtValidator, getLast10Posts);
 router.post("/post", validateSchema(postSchema), jwtValidator, postPost);
 router.get("/:id/posts", jwtValidator, otherUserPosts);
 

@@ -11,9 +11,14 @@ import {
 } from "../repositories/timelineRepository.js";
 import { getFollows } from "../repositories/usersRepository.js";
 
-export async function getLast20Posts(req, res) {
+export async function getLast10Posts(req, res) {
+  const { date } = req.query;
+  const { id: user_id } = res.locals.user;
+  let getPostConfig = { user_id };
+  if (date) getPostConfig = { ...getPostConfig, ...{ date } };
+
   try {
-    const { error, posts } = await getPosts(res.locals.user.id, 20);
+    const { error, posts } = await getPosts(getPostConfig);
 
     if (error) return res.sendStatus(500);
 
