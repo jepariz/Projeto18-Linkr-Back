@@ -1,16 +1,14 @@
 import { connection } from "../database/db.js";
 import { addMetadataToPosts } from "../repositories/urlMetadataRepository.js";
 
-export async function getPosts({ user_id, limit = 5, date }) {
+export async function getPosts({ user_id, limit = 10, date }) {
   let posts = [];
   const queryValues = [user_id, limit];
   if (date) queryValues.push(date);
   try {
     posts = await connection.query(
       `
-
           SELECT DISTINCT
-
           P.ID, U.USERNAME, U.PHOTO, P.LINK, P.TEXT, 
           P.USER_ID, P.CREATED_AT AS DATE, NULL AS REPOST_BY,
           (SELECT COUNT(R2.POST_ID) FROM REPOST AS R2 
@@ -20,9 +18,7 @@ export async function getPosts({ user_id, limit = 5, date }) {
           JOIN FOLLOWS AS F ON U.ID = F.FOLLOWED_ID
           WHERE F.FOLLOWER_ID = $1
           UNION ALL
-
           SELECT DISTINCT
-
           P2.ID, U2.USERNAME, U2.PHOTO, P2.LINK, P2.TEXT, 
           P2.USER_ID, P2.CREATED_AT AS DATE, U3.USERNAME AS REPOST_BY,
           (SELECT COUNT(R2.POST_ID) FROM REPOST AS R2 
@@ -36,12 +32,10 @@ export async function getPosts({ user_id, limit = 5, date }) {
           ORDER BY DATE DESC
           LIMIT $2  
           ${date ? `OFFSET $3` : ""}
-
       `,
       queryValues
     );
   } catch (error) {
-    console.log(error);
     return { error };
   }
 
